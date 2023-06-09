@@ -1,48 +1,51 @@
 package com.bikkadit.electronicstore.exceptions;
 
 import com.bikkadit.electronicstore.payloads.ApiResponse;
+import org.hibernate.annotations.NotFound;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandling {
-
+     Logger logger= LoggerFactory.getLogger(GlobalExceptionHandling.class);
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException ex) {
-        String message = ex.getMessage();
-        ApiResponse apiResponse = new ApiResponse();
+       logger.info("Exception Handler invoked!!");
+        ApiResponse response = ApiResponse.builder().message(ex.getMessage()).status(HttpStatus.NOT_FOUND).success(true).build();
 
-        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);
 
+        return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
     }
 
+    //method argument not valid Exception
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleMethodArgsNotValidException(MethodArgumentNotValidException ex) {
-        Map<String, String> resp = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String message = error.getDefaultMessage();
-            resp.put(fieldName, message);
+    public ResponseEntity<Map<String, Object>> handleMethodArgumentValidException(MethodArgumentNotValidException ex) {
+        List<ObjectError> allErrors = ex.getBindingResult().getAllErrors();
+
+        Map<String,Object> response = new HashMap<>();
+        allErrors.stream().forEach((objectError) -> {
+            String fieldName = ((FieldError) objectError).getField();
+            String message = objectError.getDefaultMessage();
+            response.put(fieldName, message);
 
         });
 
-        return new ResponseEntity<Map<String, String>>(resp, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+
 
     }
 
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<ApiResponse> handleApiException(ApiException ex) {
-        String message = ex.getMessage();
-        ApiResponse apiResponse = new ApiResponse();
-
-        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
-    }
 
 }

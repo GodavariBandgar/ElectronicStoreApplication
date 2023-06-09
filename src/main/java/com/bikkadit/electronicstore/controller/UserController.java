@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class UserController {
     Logger logger= LoggerFactory.getLogger(UserController.class);
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
         logger.info("Request for save the User Details");
         UserDto dto = this.userService.createUser(userDto);
         logger.info("Request completed for save the User Details");
@@ -48,7 +49,7 @@ public class UserController {
      */
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("userId") String uid, @RequestBody UserDto userdto){
+    public ResponseEntity<UserDto> updateUser(@Valid @PathVariable("userId") String uid, @RequestBody UserDto userdto){
         logger.info("Initiated Request for update the user details with userId:{}",uid);
 
         UserDto updatedUserDto = this.userService.updateUser(userdto, uid);
@@ -113,7 +114,7 @@ public class UserController {
 
     @GetMapping("/email/{email}")
     public ResponseEntity<UserDto> getUserByEmail(@PathVariable String email){
-
+        logger.info("Initiated Request for get the single user details with userId:{}",email);
         return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
     }
 
@@ -125,6 +126,7 @@ public class UserController {
 
     @GetMapping("/search/{keywords}")
     public ResponseEntity<List<UserDto>> searchUsers(@PathVariable String keywords){
+        logger.info("Initiated Request for get the single user details with userId:{}",keywords);
         return new ResponseEntity<>(userService.searchUser(keywords), HttpStatus.OK);
 
     }
