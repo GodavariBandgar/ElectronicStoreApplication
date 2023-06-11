@@ -89,8 +89,9 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable String userId){
         logger.info("Initiated Request for get the single user details with userId:{}",userId);
 
-        logger.info("Completed Request for get the single user details with userId:{}",userId);
         return new ResponseEntity<>(this.userService.getUserById(userId), HttpStatus.OK);
+
+
 
     }
 
