@@ -1,9 +1,11 @@
 package com.bikkadit.electronicstore.service.serviceImpl;
 
+import com.bikkadit.electronicstore.dtos.PageableResponse;
 import com.bikkadit.electronicstore.dtos.UserDto;
 import com.bikkadit.electronicstore.entities.User;
 import com.bikkadit.electronicstore.exceptions.ResourceNotFoundException;
 import com.bikkadit.electronicstore.helper.AppConstant;
+import com.bikkadit.electronicstore.helper.Helper;
 import com.bikkadit.electronicstore.repository.UserRepository;
 import com.bikkadit.electronicstore.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -75,17 +78,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUser(int pageNumber,int pageSize) {
+    public PageableResponse<UserDto> getAllUser(int pageNumber, int pageSize, String sortBy, String sortDir) {
         logger.info("Initiating dao call for the get all users");
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Sort sort = (sortDir.equalsIgnoreCase( "desc")) ? (Sort.by(sortBy).descending()) :(Sort.by(sortBy).ascending());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
 
         Page<User> page = userRepository.findAll(pageable);
-        List<User> users = page.getContent();
-        //List<User> allUser = userRepository.findAll();
-
-        List<UserDto> userDtos = users.stream().map(user -> this.modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
-        logger.info("Completing dao call for get All users");
-        return userDtos;
+        PageableResponse<UserDto> pageableResponse = Helper.getPageableResponse(page, UserDto.class);
+        return pageableResponse;
     }
 
     @Override
