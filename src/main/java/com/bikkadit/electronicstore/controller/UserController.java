@@ -101,9 +101,11 @@ public class UserController {
      */
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers(){
+    public ResponseEntity<List<UserDto>> getAllUsers(
+            @RequestParam(value = "pageNumber",defaultValue = "0",required = false) int pageNumber,
+            @RequestParam(value = "pageSize",defaultValue = "9",required = false) int pageSize){
         logger.info("Initiated Request for get All user details ");
-        return new ResponseEntity<>(userService.getAllUser(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUser(pageNumber,pageSize), HttpStatus.OK);
 
     }
 

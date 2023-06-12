@@ -10,6 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,11 +75,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUser() {
+    public List<UserDto> getAllUser(int pageNumber,int pageSize) {
         logger.info("Initiating dao call for the get all users");
-        List<User> allUser = userRepository.findAll();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        List<UserDto> userDtos = allUser.stream().map(user -> this.modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
+        Page<User> page = userRepository.findAll(pageable);
+        List<User> users = page.getContent();
+        //List<User> allUser = userRepository.findAll();
+
+        List<UserDto> userDtos = users.stream().map(user -> this.modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
         logger.info("Completing dao call for get All users");
         return userDtos;
     }
