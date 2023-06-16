@@ -35,7 +35,8 @@ public class UserController {
 
     @Autowired
     private FileService fileService;
-    @Value("$user.profile.image.path")
+
+    @Value("${user.profile.image.path}")
     private String imageUploadPath;
 
     /**
@@ -95,7 +96,7 @@ public class UserController {
     }
 
     /**
-     * @apiNote This method is used for gwt single User
+     * @apiNote This method is used for get single User
      * @param userId
      * @return
      */
@@ -179,7 +180,7 @@ public class UserController {
         UserDto user = userService.getUserById(userId);
         logger.info("User image name:{}",user.getImagename());
 
-        InputStream resource = fileService.getResource("imageUploadPath", user.getImagename());
+        InputStream resource = fileService.getResource(imageUploadPath, user.getImagename());
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 
         StreamUtils.copy(resource,response.getOutputStream());

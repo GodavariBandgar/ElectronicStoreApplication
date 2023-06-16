@@ -1,5 +1,6 @@
 package com.bikkadit.electronicstore.dtos;
 
+import com.bikkadit.electronicstore.customvalidation.ImageNameValid;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CategoryDto {
 
@@ -22,7 +24,7 @@ public class CategoryDto {
     @NotBlank(message = "description is must be required")
     private String description;
 
-    @NotNull
+    @ImageNameValid
     private String coverImage;
 
 }

@@ -1,7 +1,6 @@
 package com.bikkadit.electronicstore.service.serviceImpl;
 
-import com.bikkadit.electronicstore.controller.UserController;
-import com.bikkadit.electronicstore.exceptions.BadApiRequest;
+import com.bikkadit.electronicstore.exceptions.BadApiRequestException;
 import com.bikkadit.electronicstore.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.cert.Extension;
 import java.util.UUID;
 
 @Service
@@ -48,7 +46,7 @@ public class FileServiceImpl implements FileService {
             return fileNameWithExtension;
 
         }else {
-            throw new BadApiRequest("File with this " +extension+"not allowed !!");
+            throw new BadApiRequestException("File with this " +extension+"not allowed !!");
 
         }
 
@@ -57,7 +55,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public InputStream getResource(String path, String name) throws FileNotFoundException {
 
-        String fullpath=path+File.separator+name;
+        String fullpath =path+File.separator+name;
         InputStream InputStream=new FileInputStream(fullpath);
         return InputStream;
     }

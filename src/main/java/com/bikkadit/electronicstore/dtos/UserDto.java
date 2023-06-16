@@ -21,7 +21,7 @@ public class UserDto extends BaseDto {
     @Size(min = 3,max = 25,message = "Invalid Name!!")
     private String name;
    // @Email(message = "Invalid User Email!!")
-    @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",message = "Invalid User Email!!!")
+    //@Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",message = "Invalid User Email!!!")
     @NotBlank(message = "email is Required!!!")
     private String email;
     @NotBlank(message = "Password is Required!!")
