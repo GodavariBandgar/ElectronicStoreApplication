@@ -122,8 +122,6 @@ public class UserController {
             @RequestParam(value = "pageSize",defaultValue = "9",required = false) int pageSize,
             @RequestParam(value = "sortBy",defaultValue = "name",required = false) String sortBy,
             @RequestParam(value = "sortDir",defaultValue = "asc",required = false) String sortDir)
-
-
     {
         logger.info("Initiated Request for get All user details ");
         return new ResponseEntity<>(userService.getAllUser(pageNumber,pageSize,sortBy,sortDir), HttpStatus.OK);

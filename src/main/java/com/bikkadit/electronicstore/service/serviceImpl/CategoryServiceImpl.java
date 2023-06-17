@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
         logger.info("Initiating dao call for the delete the category details with:{}",categoryId);
 
 
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.NOT_FOUND));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_DELETE));
         logger.info("Completing dao call for the update the category details with:{}",categoryId);
         categoryRepository.delete(category);
 
