@@ -152,6 +152,14 @@ public class UserController {
         return new ResponseEntity<>(userService.searchUser(keywords), HttpStatus.OK);
 
     }
+
+    /**
+     * @apiNote this method is upload the image
+     * @param image
+     * @param userId
+     * @return
+     * @throws IOException
+     */
     //upload User image
     @PostMapping("/image/{userId}")
     public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("userImage")MultipartFile image,@PathVariable String userId
@@ -170,6 +178,13 @@ public class UserController {
 
 
     }
+
+    /**
+     * @apiNote This method is used for serve the image
+     * @param userId
+     * @param response
+     * @throws IOException
+     */
 
     //serve User image
     @GetMapping("/image/{userId}")
