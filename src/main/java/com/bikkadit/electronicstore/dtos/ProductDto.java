@@ -1,5 +1,6 @@
 package com.bikkadit.electronicstore.dtos;
 
+import com.bikkadit.electronicstore.entities.Category;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -25,4 +26,5 @@ public class ProductDto {
     private boolean live;
     private boolean stock;
     private String productImageName;
+    private CategoryDto category;
 }
