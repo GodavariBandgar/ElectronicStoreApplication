@@ -164,7 +164,7 @@ public class UserController {
     @PostMapping("/image/{userId}")
     public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("userImage")MultipartFile image,@PathVariable String userId
     ) throws IOException {
-
+        logger.info("Initiating Request for upload the image details with userId:{}",userId );
         String imageName = fileService.uploadFile(image, imageUploadPath);
 
         UserDto user = userService.getUserById(userId);
@@ -172,6 +172,7 @@ public class UserController {
         UserDto userDto = userService.updateUser(user,userId);
 
         ImageResponse imageResponse=ImageResponse.builder().imageName(imageName).success(true).status(HttpStatus.CREATED).build();
+        logger.info("Completed Request for upload the image details with userId:{}",userId );
         return new ResponseEntity<>(imageResponse,HttpStatus.CREATED);
 
 

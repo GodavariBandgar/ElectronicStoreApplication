@@ -121,7 +121,7 @@ public class ProductController {
     @PostMapping("/image/{productId}")
     public ResponseEntity<ImageResponse> uploadProductImage(@RequestParam("productImage") MultipartFile image, @PathVariable String productId
     ) throws IOException {
-
+        logger.info("Initiating Request for upload the image details with productId:{}",productId );
         String imageName = fileService.uploadFile(image, imageUploadPath);
 
         ProductDto productDto = productService.get(productId);
@@ -130,6 +130,7 @@ public class ProductController {
 
 
         ImageResponse imageResponse = ImageResponse.builder().imageName(imageName).success(true).status(HttpStatus.CREATED).build();
+        logger.info("Completed Request for upload the image details with productId:{}",productId );
         return new ResponseEntity<>(imageResponse, HttpStatus.CREATED);
     }
 

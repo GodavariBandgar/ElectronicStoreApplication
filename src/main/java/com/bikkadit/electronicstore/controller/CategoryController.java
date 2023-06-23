@@ -126,7 +126,7 @@ public class CategoryController {
     @PostMapping("/image/{categoryId}")
     public ResponseEntity<ImageResponse> uploadCategoryImage(@RequestParam("categoryImage") MultipartFile image, @PathVariable String categoryId
     ) throws IOException {
-
+        logger.info("Initiating Request for upload the image details with categoryId:{}",categoryId );
         String imageName = fileService.uploadFile(image, imageUploadPath);
 
         CategoryDto category = categoryService.getSingleCategoryById(categoryId);
@@ -134,6 +134,8 @@ public class CategoryController {
         CategoryDto categoryDto = categoryService.updateCategory(category, categoryId);
 
         ImageResponse imageResponse = ImageResponse.builder().imageName(imageName).success(true).status(HttpStatus.CREATED).build();
+
+        logger.info("completed Request for upload the image details with categoryId:{}",categoryId );
         return new ResponseEntity<>(imageResponse, HttpStatus.CREATED);
 
 
@@ -153,7 +155,7 @@ public class CategoryController {
 
     }
 
-    //
+
     //  create product with category
     @PostMapping("/{categoryId}/products")
     public ResponseEntity<ProductDto> createProductWithCategory(
