@@ -84,7 +84,7 @@ public class ProductController {
     {
         logger.info("Initiated Request for get All product details ");
         PageableResponse<ProductDto> pageableResponse = productService.getAll(pageNumber, pageSize, sortBy, sortDir);
-
+        logger.info("Completed Request for get All Product details ");
         return new ResponseEntity<>(pageableResponse,HttpStatus.OK);
 
 
@@ -96,9 +96,9 @@ public class ProductController {
             @RequestParam(value = "pageSize",defaultValue = "9",required = false) int pageSize,
             @RequestParam(value = "sortBy",defaultValue = "title",required = false) String sortBy,
             @RequestParam(value = "sortDir",defaultValue = "asc",required = false) String sortDir) {
-        logger.info("Initiated Request for get All Product details ");
+        logger.info("Initiated Request for get All live Product details ");
         PageableResponse<ProductDto> pageableResponse = productService.getAllLive(pageNumber, pageSize, sortBy, sortDir);
-
+        logger.info("Completed Request for get All live Product details ");
         return new ResponseEntity<>(pageableResponse, HttpStatus.OK);
 
     }
@@ -110,9 +110,9 @@ public class ProductController {
             @RequestParam(value = "pageSize",defaultValue = "9",required = false) int pageSize,
             @RequestParam(value = "sortBy",defaultValue = "title",required = false) String sortBy,
             @RequestParam(value = "sortDir",defaultValue = "asc",required = false) String sortDir) {
-        logger.info("Initiated Request for get All Product details ");
+        logger.info("Initiated Request for search  Product details ");
         PageableResponse<ProductDto> pageableResponse = productService.searchByTitle(Query,pageNumber, pageSize, sortBy, sortDir);
-
+        logger.info("Completed Request for search  Product details ");
         return new ResponseEntity<>(pageableResponse, HttpStatus.OK);
 
     }
