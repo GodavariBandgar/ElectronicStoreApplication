@@ -8,6 +8,8 @@ class Electronicstore2ApplicationTests {
 
 	@Test
 	void contextLoads() {
+
+		System.out.println("JUnit Test Starting");
 	}
 
 }
