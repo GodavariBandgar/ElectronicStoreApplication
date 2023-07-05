@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.internal.MockedConstructionImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -126,14 +127,61 @@ class UserServiceImplTest {
 
     @Test
     void getUserById() {
+        String userId="goda12";
+        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        //actual call for Service method
+        UserDto userDto = userService.getUserById(userId);
+
+        Assertions.assertNotNull(userDto);
+        Assertions.assertEquals(user.getName(),userDto.getName(),"name not matched");
     }
 
     @Test
     void getUserByEmail() {
+
+        String emailId="bandgar@gmail.com";
+
+        Mockito.when(userRepository.findByEmail(emailId)).thenReturn(Optional.of(user));
+
+        UserDto userDto = userService.getUserByEmail(emailId);
+
+        Assertions.assertNotNull(userDto);
+        Assertions.assertEquals(user.getEmail(),userDto.getEmail(),"Email Not matched");
     }
 
     @Test
     void searchUser() {
+         User user1=User.builder().name("Dilip")
+                .email("bandgar@gmail.com")
+                .about("This is testing create user")
+                .gender("Female")
+                .imagename("abc.png")
+                .password("goda")
+                .build();
+
+       User user2=User.builder().name("Pari Devkatte")
+                .email("bandgar@gmail.com")
+                .about("This is testing create user")
+                .gender("Female")
+                .imagename("abc.png")
+                .password("goda")
+                .build();
+        User user3 =User.builder().name("Godavari")
+                .email("bandgar@gmail.com")
+                .about("This is testing create user")
+                .gender("Female")
+                .imagename("abc.png")
+                .password("goda")
+                .build();
+
+        String Keywords="Pari";
+
+        Mockito.when(userRepository.findByNameContaining(Keywords)).thenReturn(List.of(user,user1,user2,user3));
+
+        List<UserDto> userDtos = userService.searchUser((Keywords));
+
+        Assertions.assertEquals(4,userDtos.size(),"Size not matched!!!");
 
 
     }
