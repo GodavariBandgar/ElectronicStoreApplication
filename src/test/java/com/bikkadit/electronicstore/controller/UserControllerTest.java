@@ -52,8 +52,8 @@ class UserControllerTest {
     public void createUser() throws Exception {
         //users+Post + user data as json
         //data as jso+status created
-        UserDto dto = modelMapper.map(user, UserDto.class);
-        Mockito.when(userService.createUser(Mockito.any())).thenReturn(dto);
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        Mockito.when(userService.createUser(Mockito.any())).thenReturn(userDto);
         //actual request for url
         this.mockMvc.perform(
                         MockMvcRequestBuilders.post("/users")
