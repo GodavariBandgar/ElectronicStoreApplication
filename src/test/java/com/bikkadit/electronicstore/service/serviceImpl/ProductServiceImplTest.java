@@ -102,6 +102,15 @@ class ProductServiceImplTest {
 
     @Test
     void get() {
+        String productId="goda12";
+        Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
+
+        //actual call for Service method
+        ProductDto productDto = productService.get(productId);
+
+        Assertions.assertNotNull(productDto);
+        Assertions.assertEquals(product.getTitle(),productDto.getTitle(),"name not matched");
+
 
 
     }
