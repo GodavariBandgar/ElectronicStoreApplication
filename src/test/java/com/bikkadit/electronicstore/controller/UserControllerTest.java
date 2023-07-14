@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -171,11 +172,55 @@ class UserControllerTest {
     }
 
     @Test
-    void getUserByEmail() {
+    void getUserByEmail() throws Exception {
+
+        String emailId="kirti@gmail.com";
+        UserDto userDto = this.modelMapper.map(user, UserDto.class);
+        Mockito.when(userService.getUserByEmail(Mockito.anyString())).thenReturn(userDto);
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.get("/users/email/"+emailId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").exists());
     }
 
     @Test
-    void searchUsers() {
+    void searchUsers()throws Exception {
+
+        String keyword= "Bandgar";
+        UserDto userDto = UserDto.builder()
+                .name("Pari ")
+                .email("pari@gmail.com")
+                .password("pari143")
+                .gender("female")
+                .about("Testing method for getting all user")
+                .imagename("abc.png")
+                .build();
+        UserDto userDto2 = UserDto.builder()
+                .name("Dilip")
+                .email("dilip@gmail.com")
+                .password("dilip145")
+                .gender("Male")
+                .about("Testing method for getting all user")
+                .imagename("xyz.png")
+                .build();
+        UserDto userDto3 = UserDto.builder()
+                .name("Tuka Bandgar")
+                .email("tuka@gmail.com")
+                .password("tuka156")
+                .gender("male")
+                .about("Testing method for getting all user")
+                .imagename("xyz.png")
+                .build();
+        Mockito.when(userService.searchUser(keyword)).thenReturn(List.of(userDto3,userDto2,userDto));
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.get("/users/search/"+keyword)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
