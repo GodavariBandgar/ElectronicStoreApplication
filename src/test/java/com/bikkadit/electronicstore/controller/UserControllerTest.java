@@ -52,8 +52,8 @@ class UserControllerTest {
     public void createUser() throws Exception {
         //users+Post + user data as json
         //data as jso+status created
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-        Mockito.when(userService.createUser(Mockito.any())).thenReturn(userDto);
+        UserDto dto = modelMapper.map(user, UserDto.class);
+        Mockito.when(userService.createUser(Mockito.any())).thenReturn(dto);
         //actual request for url
         this.mockMvc.perform(
                         MockMvcRequestBuilders.post("/users")
@@ -64,8 +64,6 @@ class UserControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").exists());
     }
-
-
 
     @Test
     void updateUser()throws Exception  {
@@ -223,13 +221,6 @@ class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void uploadUserImage() {
-    }
-
-    @Test
-    void serveUserImage() {
-    }
     private String convertObjectToJsonString(Object user){
 
         try{
