@@ -91,7 +91,16 @@ class UserControllerTest {
     }
 
     @Test
-    void deleteUser() {
+    void deleteUser()throws Exception {
+
+        String userId= "2365";
+        Mockito.doNothing().when(userService).deleteUser(Mockito.anyString());
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.delete("/users/" +userId))
+                .andDo(print())
+                .andExpect(status().isOk());
+        //verify
+        Mockito.verify(userService,Mockito.times(1)).deleteUser(userId);
 
 
 
