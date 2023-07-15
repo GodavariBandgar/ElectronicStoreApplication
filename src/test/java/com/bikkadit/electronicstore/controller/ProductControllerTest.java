@@ -100,7 +100,6 @@ class ProductControllerTest {
 
 
     }
-
     @Test
     void deleteProduct() throws Exception {
 
@@ -122,7 +121,7 @@ class ProductControllerTest {
         String productId ="123";
 
         ProductDto productDto = this.modelMapper.map(product, ProductDto.class);
-//        Mockito.when(categoryService.getCategoryById(Mockito.anyString())).thenReturn(categoryDto);
+       Mockito.when(productService.get(Mockito.anyString())).thenReturn(productDto);
         Mockito.when(productService.get(productId)).thenReturn(productDto);
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/products/"+productId)
