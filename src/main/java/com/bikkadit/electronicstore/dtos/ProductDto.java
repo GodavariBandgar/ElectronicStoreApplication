@@ -19,18 +19,18 @@ public class ProductDto {
     @Size(min = 3,max = 27,message = "Invalid name")
     private String title;
 
-    @NotBlank(message = "Description must be required")
+   // @NotBlank(message = "Description must be required")
     private String description;
 
-    @NotBlank(message = "price will be required")
+   // @NotBlank(message = "price will be required")
     private double price;
-    @NotBlank(message = "must be required")
+    //@NotBlank(message = "must be required")
     private int discountedPrice;
 
     private int quantity;
 
     private Date addedDate;
-    @NotBlank
+    //@NotBlank
     private boolean live;
     private boolean stock;
     @ImageNameValid
