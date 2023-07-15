@@ -2,10 +2,10 @@ package com.bikkadit.electronicstore.controller;
 
 import com.bikkadit.electronicstore.dtos.CategoryDto;
 import com.bikkadit.electronicstore.dtos.PageableResponse;
-import com.bikkadit.electronicstore.dtos.UserDto;
+
 import com.bikkadit.electronicstore.entities.Category;
 
-import com.bikkadit.electronicstore.entities.User;
+
 import com.bikkadit.electronicstore.service.CategoryService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -167,9 +167,9 @@ class CategoryControllerTest {
 
 
 
-    private String convertObjectToJsonString(Object user) {
+    private String convertObjectToJsonString(Object category) {
         try {
-            return new ObjectMapper().writeValueAsString(user);
+            return new ObjectMapper().writeValueAsString(category);
         }
         catch (Exception e) {
             e.printStackTrace();
