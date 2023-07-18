@@ -20,7 +20,7 @@ public class CartItem {
 
     private int quantity;
 
-    private int totalPrice;
+    private double totalPrice;
     //mapping cart
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
