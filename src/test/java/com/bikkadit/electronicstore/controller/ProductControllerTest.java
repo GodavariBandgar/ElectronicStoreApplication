@@ -54,8 +54,7 @@ class ProductControllerTest {
     }
 
     @Test
-    void createProduct() throws Exception{
-
+    void createProduct() throws Exception {
         ProductDto productDto = modelMapper.map(product, ProductDto.class);
         Mockito.when(productService.create(Mockito.any())).thenReturn(productDto);
         //actual request for url
@@ -67,9 +66,6 @@ class ProductControllerTest {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").exists());
-
-
-
     }
 
     @Test
@@ -116,23 +112,21 @@ class ProductControllerTest {
 
     }
 
-    @Test
-    void getProduct()throws Exception{
-        String productId ="123";
+   @Test
+    void getProduct() throws Exception{
+       String productId ="123";
+       ProductDto productDto = this.modelMapper.map(product, ProductDto.class);
+       //Mockito.when(productService.get(Mockito.anyString())).thenReturn(productDto);
+       Mockito.when(productService.get(productId)).thenReturn(productDto);
+       this.mockMvc.perform(
+                       MockMvcRequestBuilders.get("/products/"+productId)
+                               .contentType(MediaType.APPLICATION_JSON)
+                               .accept(MediaType.APPLICATION_JSON))
+               .andDo(print())
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.title").exists());
 
-        ProductDto productDto = this.modelMapper.map(product, ProductDto.class);
-       Mockito.when(productService.get(Mockito.anyString())).thenReturn(productDto);
-        Mockito.when(productService.get(productId)).thenReturn(productDto);
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/products/"+productId)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").exists());
-
-
-    }
+   }
 
     @Test
     void getAllProduct()throws Exception {

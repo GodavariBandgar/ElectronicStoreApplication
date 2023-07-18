@@ -38,7 +38,6 @@ public class UserController {
 
     @Value("${user.profile.image.path}")
     private String imageUploadPath;
-
     /**
      * @Author Godavari Bandgar
      * @apiNote this method is a Create a User

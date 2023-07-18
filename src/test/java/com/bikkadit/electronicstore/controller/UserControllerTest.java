@@ -13,19 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-
 import java.util.Arrays;
 import java.util.List;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 class UserControllerTest {
@@ -49,23 +45,27 @@ class UserControllerTest {
                 .imagename("abc.png")
                 .password("goda")
                 .build();
+
+
+
     }
-    @Test
-    public void createUser() throws Exception {
-        //users+Post + user data as json
-        //data as jso+status created
-        UserDto dto = modelMapper.map(user, UserDto.class);
-        Mockito.when(userService.createUser(Mockito.any())).thenReturn(dto);
-        //actual request for url
-        this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/users")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(convertObjectToJsonString(user))
-                                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").exists());
-    }
+   @Test
+  public void createUser()throws Exception  {
+       //users+Post + user data as json
+       //data as jso+status created
+       UserDto dto = modelMapper.map(user, UserDto.class);
+       Mockito.when(userService.createUser(Mockito.any())).thenReturn(dto);
+       //actual request for url
+       this.mockMvc.perform(
+                       MockMvcRequestBuilders.post("/users")
+                               .contentType(MediaType.APPLICATION_JSON)
+                               .content(convertObjectToJsonString(dto))
+                               .accept(MediaType.APPLICATION_JSON))
+               .andDo(print())
+               .andExpect(status().isCreated())
+               .andExpect(jsonPath("$.name").exists());
+
+   }
 
     @Test
     void updateUser()throws Exception  {

@@ -70,7 +70,7 @@ public class ProductController {
         logger.info("Initiated Request for delete the product details with productId:{}",productId);
         ProductDto productDto = this.productService.get(productId);
         logger.info("Completed Request for delete the product details with productId:{}",productId);
-        return new ResponseEntity<>(productDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(productDto, HttpStatus.OK);
     }
 
     @GetMapping
