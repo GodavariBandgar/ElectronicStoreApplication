@@ -16,7 +16,7 @@ public class CartController {
     private CartService cartService;
 
     //add item to cart
-    @PostMapping("/userId")
+    @PostMapping("/{userId}")
     public ResponseEntity<CartDto> addItemToCart(@PathVariable String userId, @RequestBody AddItemToCartRequest request){
         CartDto cartDto = cartService.addItemToCart(userId, request);
         return new ResponseEntity<>(cartDto, HttpStatus.OK);
@@ -26,7 +26,7 @@ public class CartController {
       cartService.removeItemFromCart(userId, itemId);
 
         ApiResponse response = ApiResponse.builder()
-                .message("item is required!!")
+                .message("item is removed!!")
                 .success(true)
                 .status(HttpStatus.OK)
                 .build();
@@ -39,14 +39,14 @@ public class CartController {
         cartService.clearCart(userId);
 
         ApiResponse response = ApiResponse.builder()
-                .message("cart is not blank!!")
+                .message("cart is clear in Db!!")
                 .success(true)
                 .status(HttpStatus.OK)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     //add item to cart
-    @GetMapping("/userId")
+    @GetMapping("/{userId}")
     public ResponseEntity<CartDto> getCart(@PathVariable String userId) {
         CartDto cartDto = cartService.getCartByUser(userId);
         return new ResponseEntity<>(cartDto, HttpStatus.OK);
